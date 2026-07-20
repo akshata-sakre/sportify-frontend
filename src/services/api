@@ -1,0 +1,117 @@
+import axios from 'axios'
+
+const API = axios.create({
+    baseURL: 'http://localhost:8080/api'
+})
+
+// Automatically attach token to every request if logged in
+API.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+})
+
+// Auth
+export const registerUser = (data) => API.post('/auth/register', data)
+export const loginUser = (data) => API.post('/auth/login', data)
+
+// Sports
+export const getAllSports = () => API.get('/sports')
+export const getSportById = (id) => API.get(`/sports/${id}`)
+
+// Teams
+export const getAllTeams = () => API.get('/teams')
+export const getTeamsBySport = (sportId) => API.get(`/teams/sport/${sportId}`)
+
+// Matches
+export const getAllMatches = () => API.get('/matches')
+export const getMatchesBySport = (sportId) => API.get(`/matches/sport/${sportId}`)
+export const getMatchesByStatus = (status) => API.get(`/matches/status/${status}`)
+
+// Bookings
+export const bookTicket = (userId, matchId, quantity, paymentMethod) =>
+    API.post(`/bookings/user/${userId}/match/${matchId}/quantity/${quantity}`, null, { params: { paymentMethod } })
+export const getBookingsByUser = (userId) => API.get(`/bookings/user/${userId}`)
+export const getAllBookings = () => API.get('/bookings')
+export const cancelBooking = (id) => API.put(`/bookings/cancel/${id}`)
+export const requestCancelBooking = (id) => API.put(`/bookings/${id}/request-cancellation`)
+export const approveCancelBooking = (id) => API.put(`/bookings/${id}/approve-cancellation`)
+export const rejectCancelBooking = (id) => API.put(`/bookings/${id}/reject-cancellation`)
+
+// Products
+export const getAllProducts = () => API.get('/products')
+export const getProductsByCategory = (category) => API.get(`/products/category/${category}`)
+export const getProductsBySport = (sportId) => API.get(`/products/sport/${sportId}`)
+
+// Cart
+export const addToCart = (userId, productId, quantity) =>
+    API.post(`/cart/user/${userId}/product/${productId}/quantity/${quantity}`)
+export const getCartByUser = (userId) => API.get(`/cart/user/${userId}`)
+export const removeFromCart = (userId, productId) =>
+    API.delete(`/cart/user/${userId}/product/${productId}`)
+export const clearCart = (userId) => API.delete(`/cart/user/${userId}/clear`)
+
+// Orders
+export const placeOrder = (userId, address, paymentMethod) =>
+    API.post(`/orders/user/${userId}`, null, { params: { address, paymentMethod } })
+export const getOrdersByUser = (userId) => API.get(`/orders/user/${userId}`)
+export const getOrderItems = (orderId) => API.get(`/orders/${orderId}/items`)
+export const requestCancelOrder = (id) => API.put(`/orders/${id}/request-cancellation`)
+export const approveCancelOrder = (id) => API.put(`/orders/${id}/approve-cancellation`)
+export const rejectCancelOrder = (id) => API.put(`/orders/${id}/reject-cancellation`)
+
+// News
+export const getAllNews = () => API.get('/news')
+export const getNewsBySport = (sportId) => API.get(`/news/sport/${sportId}`)
+
+// Videos
+export const getAllVideos = () => API.get('/videos')
+export const getVideosBySport = (sportId) => API.get(`/videos/sport/${sportId}`)
+
+// Events
+export const getAllEvents = () => API.get('/events')
+export const getEventsBySport = (sportId) => API.get(`/events/sport/${sportId}`)
+
+// Razorpay
+export const createRazorpayOrder = (amount) => API.post('/payment/create-order', { amount })
+export const verifyRazorpayPayment = (data) => API.post('/payment/verify', data)
+
+// Password Reset
+export const forgotPassword = (email) => API.post('/auth/forgot-password', { email })
+export const verifyOtp = (email, otp) => API.post('/auth/verify-otp', { email, otp })
+export const resetPassword = (data) => API.post('/auth/reset-password', data)
+
+// Admin APIs
+export const getAllUsers = () => API.get('/users')
+export const addSport = (data) => API.post('/sports', data)
+export const addTeam = (sportId, data) => API.post(`/teams/sport/${sportId}`, data)
+export const updateTeam = (id, data) => API.put(`/teams/${id}`, data)
+export const deleteTeam = (id) =>
+  API.delete(`/teams/${id}`);
+export const addMatch = (sportId, team1Id, team2Id, data) => API.post(`/matches/sport/${sportId}/teams/${team1Id}/${team2Id}`, data)
+export const updateMatch = (id, data) => API.put(`/matches/${id}`, data)
+export const deleteMatch = (id) => API.delete(`/matches/${id}`)
+export const addProduct = (sportId, data) => API.post(`/products/sport/${sportId}`, data)
+export const updateProduct = (id, data) => API.put(`/products/${id}`, data)
+export const deleteProduct = (id) => API.delete(`/products/${id}`)
+export const addNews = (sportId, data) => API.post(`/news/sport/${sportId}`, data)
+export const updateNews = (id, data) => API.put(`/news/${id}`, data)
+export const deleteNews = (id) => API.delete(`/news/${id}`)
+export const addVideo = (sportId, data) => API.post(`/videos/sport/${sportId}`, data)
+export const updateVideo = (id, data) => API.put(`/videos/${id}`, data)
+export const deleteVideo = (id) => API.delete(`/videos/${id}`)
+export const addEvent = (sportId, data) => API.post(`/events/sport/${sportId}`, data)
+export const updateEvent = (id, data) => API.put(`/events/${id}`, data)
+export const deleteEvent = (id) => API.delete(`/events/${id}`)
+export const updateOrderStatus = (id, status) => API.put(`/orders/${id}/status?status=${status}`)
+export const getAllOrders = () => API.get('/orders')
+export const updateSport = (id, data) =>
+  API.put(`/sports/${id}`, data)
+
+export const deleteSport = (id) =>
+  API.delete(`/sports/${id}`)
+
+// export const verifyOtp = (data) =>
+//     api.post("/auth/verify-otp", data);

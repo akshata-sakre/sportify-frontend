@@ -1,0 +1,166 @@
+/* ────────────────────────────────────────────────────
+   Global responsive layer.
+   Breakpoints: 1024px (tablet), 768px (mobile), 480px (small mobile).
+   Page-specific fine-tuning lives in each page's own CSS file;
+   this file covers layout shared across the whole app.
+   ──────────────────────────────────────────────────── */
+
+/* ── Safety net ───────────────────────────────────── */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  max-width: 100%;
+}
+
+/* ── Navbar ───────────────────────────────────────── */
+.navbar-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(255, 0, 51, 0.4);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .navbar-inner {
+    padding: 0 20px;
+    flex-wrap: wrap;
+  }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 16px 0 20px;
+  }
+
+  .navbar-links--open {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: 12px 6px;
+    border-bottom: 1px solid rgba(255, 0, 51, 0.08);
+  }
+
+  .navbar-btn {
+    justify-content: center;
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    font-size: 26px;
+    letter-spacing: 3px;
+  }
+}
+
+/* ── Marquee ──────────────────────────────────────── */
+@media (max-width: 480px) {
+  .marquee-label {
+    font-size: 10px;
+    padding: 0 12px;
+  }
+
+  .marquee-item {
+    font-size: 11px;
+    padding: 0 20px;
+  }
+}
+
+/* ── Shared page headers / containers ────────────────
+   Applies to every {page}-header / {page}-container pair
+   (News, Events, Videos, Matches, Merch, Cart, Tickets, Profile). */
+@media (max-width: 768px) {
+  .news-header, .events-header, .videos-header,
+  .matches-header, .merch-header, .cart-header,
+  .tickets-header {
+    padding: 40px 24px;
+  }
+
+  .news-container, .events-container, .videos-container,
+  .matches-container, .merch-container, .cart-container,
+  .tickets-container {
+    padding: 28px 20px;
+  }
+
+  .news-filters__btns, .events-filters__btns, .videos-filters__btns,
+  .matches-filters__btns {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .news-grid, .events-grid, .videos-grid, .matches-grid {
+    gap: 16px;
+  }
+}
+
+/* ── Footer ───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 40px 24px 20px;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* ── Admin layout ─────────────────────────────────── */
+@media (max-width: 900px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .admin-sidebar__nav {
+    flex-direction: row;
+  }
+
+  .admin-page {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-page__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-form__grid {
+    grid-template-columns: 1fr;
+  }
+}
